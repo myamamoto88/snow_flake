@@ -1,4 +1,5 @@
 require 'snow_flake/component/base'
+require 'snow_flake/component/constable'
 require 'snow_flake/component/machine_id'
 require 'snow_flake/component/sequence'
 require 'snow_flake/component/sign_bit'
@@ -22,7 +23,7 @@ class SnowFlake
     end
 
     def process(resource = {})
-      components.each do |component|
+      non_constable_components.each do |component|
         component.process(
           Resource.new(resource[:last_timestamp_ms], resource[:timestamp_ms])
         )
@@ -46,6 +47,10 @@ class SnowFlake
 
     def components
       @components ||= FORMATION.map(&:new)
+    end
+
+    def non_constable_components
+      @non_constable_components ||= components.reject(&:const?)
     end
   end
 end

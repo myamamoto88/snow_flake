@@ -28,6 +28,10 @@ class SnowFlake
         false
       end
 
+      def const?
+        false
+      end
+
       protected
 
       def _process(resource)

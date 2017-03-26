@@ -3,6 +3,8 @@ class SnowFlake
     class MachineId < Base
       class NilMachineIdOfConfig < StandardError; end
 
+      include Constable
+
       def setup(config)
         raise NilMachineIdOfConfig if config.machine_id.nil?
         @value = config.machine_id
@@ -10,11 +12,6 @@ class SnowFlake
 
       def bits
         10
-      end
-
-      private
-
-      def _process(resource)
       end
     end
   end
