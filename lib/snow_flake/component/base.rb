@@ -7,8 +7,8 @@ class SnowFlake
         raise NotImplementedError
       end
 
-      def process(timestamp_ms)
-        _process(timestamp_ms)
+      def process(resource)
+        _process(resource)
         raise InvalidValueError unless valid?
       end
 
@@ -30,7 +30,7 @@ class SnowFlake
 
       protected
 
-      def _process(timestamp_ms)
+      def _process(resource)
         raise NotImplementedError
       end
 

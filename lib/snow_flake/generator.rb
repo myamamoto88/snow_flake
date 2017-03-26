@@ -5,7 +5,10 @@ class SnowFlake
     def id
       timestamp_ms = current_timestmap_ms
 
-      commander.process(timestamp_ms)
+      commander.process(
+        timestamp_ms: timestamp_ms,
+        last_timestamp_ms: last_timestamp_ms
+      )
       commander.conflate
     ensure
       timestamp_ms = fetch_next_time(timestamp_ms) if commander.wait?

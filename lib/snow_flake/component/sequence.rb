@@ -8,9 +8,18 @@ class SnowFlake
         12
       end
 
+      def wait?
+        value.zero?
+      end
+
       private
 
-      def _process(timestamp_ms)
+      def _process(resource)
+        if resource.last_timestamp_ms != resource.timestamp_ms
+          @value = 1
+        else
+          @value = (value + 1) & max_bits
+        end
       end
     end
   end

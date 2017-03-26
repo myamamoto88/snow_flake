@@ -13,15 +13,22 @@ class SnowFlake
       ::SnowFlake::Component::Timestamp
     ]
 
+    Resource = Struct.new(:last_timestamp_ms, :timestamp_ms)
+
     def setup(config)
       components.each do |component|
         component.setup(config)
       end
     end
 
-    def process(timestamp_ms)
+    def process(resource = {})
       components.each do |component|
-        component.process(timestamp_ms)
+        component.process(
+          Resource.new(
+            timestamp_ms: resource[:timestamp_ms],
+            last_timestamp_ms: resource[:last_timestamp_ms]
+          )
+        )
       end
     end
 
