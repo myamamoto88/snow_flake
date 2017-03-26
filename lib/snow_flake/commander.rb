@@ -26,6 +26,11 @@ class SnowFlake
     end
 
     def conflate
+      shifted_bit = 0
+      components.reverse.each_with_object(0) do |component, id|
+        id += component.value << shifted_bit
+        shifted_bit += component.bits
+      end
     end
 
     def wait?
