@@ -7,10 +7,10 @@ require 'snow_flake/component/timestamp'
 class SnowFlake
   class Commander
     FORMATION = [
-      ::SnowFlake::Component::MachineId,
-      ::SnowFlake::Component::Sequence,
       ::SnowFlake::Component::SignBit,
-      ::SnowFlake::Component::Timestamp
+      ::SnowFlake::Component::Timestamp,
+      ::SnowFlake::Component::MachineId,
+      ::SnowFlake::Component::Sequence
     ]
 
     Resource = Struct.new(:last_timestamp_ms, :timestamp_ms)
