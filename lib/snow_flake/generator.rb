@@ -7,7 +7,7 @@ class SnowFlake
       commander.conflate
     ensure
       wait_for_next_time(timestamp_ms) if commander.wait?
-      last_timestamp_ms = timstamp_ms
+      @last_timestamp_ms = timestamp_ms
     end
 
     def setup(config)

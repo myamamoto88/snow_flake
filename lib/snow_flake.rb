@@ -1,3 +1,8 @@
+require 'singleton'
+require 'snow_flake/commander'
+require 'snow_flake/config'
+require 'snow_flake/generator'
+
 class SnowFlake
   class NoSetup < StandardError; end
 
@@ -17,10 +22,6 @@ class SnowFlake
     @setup_finish = false
   end
 
-  def setup_finish?
-    @setup_finish
-  end
-
   def id
     lock.synchronize { generator.id }
   end
@@ -28,6 +29,12 @@ class SnowFlake
   def setup(&block)
     @setup_finish = true
     config.setup(&block)
+  end
+
+  private
+
+  def setup_finish?
+    @setup_finish
   end
 
   def config
