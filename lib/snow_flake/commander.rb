@@ -24,19 +24,17 @@ class SnowFlake
     def process(resource = {})
       components.each do |component|
         component.process(
-          Resource.new(
-            timestamp_ms: resource[:timestamp_ms],
-            last_timestamp_ms: resource[:last_timestamp_ms]
-          )
+          Resource.new(resource[:last_timestamp_ms], resource[:timestamp_ms])
         )
       end
     end
 
     def conflate
       shifted_bit = 0
-      components.reverse.each_with_object(0) do |component, id|
+      components.reverse.inject(0) do |id, component|
         id += component.value << shifted_bit
         shifted_bit += component.bits
+        id
       end
     end
 
