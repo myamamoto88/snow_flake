@@ -1,12 +1,13 @@
 require 'singleton'
+require 'forwardable'
 require 'snow_flake/commander'
 require 'snow_flake/config'
 require 'snow_flake/generator'
+require 'snow_flake/provider'
 
 class SnowFlake
-  class NoSetup < StandardError; end
-
   include Singleton
+  extend Forwardable
 
   class << self
     def id
@@ -18,38 +19,11 @@ class SnowFlake
     end
   end
 
-  def initilize
-    @setup_finish = false
-  end
-
-  def id
-    lock.synchronize { generator.id }
-  end
-
-  def setup(&block)
-    @setup_finish = true
-    config.setup(&block)
-    generator.setup(config)
-  end
+  def_delegators :provider, :id, :setup
 
   private
 
-  def setup_finish?
-    @setup_finish
-  end
-
-  def config
-    @config ||= Config.new
-  end
-
-  def generator
-    @generator ||= begin
-                     raise NoSetup unless setup_finish?
-                     Generator.new
-                   end
-  end
-
-  def lock
-    @lock ||= Monitor.new
+  def provider
+    @provider ||= Provider.new
   end
 end
