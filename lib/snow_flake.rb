@@ -29,6 +29,7 @@ class SnowFlake
   def setup(&block)
     @setup_finish = true
     config.setup(&block)
+    generator.setup(config)
   end
 
   private
@@ -44,9 +45,7 @@ class SnowFlake
   def generator
     @generator ||= begin
                      raise NoSetup unless setup_finish?
-                     _generator = Generator.new
-                     _generator.setup(config)
-                     _generator
+                     Generator.new
                    end
   end
 
