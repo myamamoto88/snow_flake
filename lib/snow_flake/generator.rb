@@ -1,6 +1,6 @@
 class SnowFlake
   class Generator
-    class TimeMoveBackWard < StandardError; end
+    class TimeMoveBackWardError < StandardError; end
 
     def id
       timestamp_ms = current_timestmap_ms
@@ -30,7 +30,7 @@ class SnowFlake
       timestamp_ms = (Time.now.to_f * 1_000).to_i
       diff = timestamp_ms - last_timestamp_ms
       if diff.negative?
-        raise TimeMoveBackWard,
+        raise TimeMoveBackWardError,
           "Refusing to generate id, because time is back (#{diff} ms)"
       end
       timestamp_ms
