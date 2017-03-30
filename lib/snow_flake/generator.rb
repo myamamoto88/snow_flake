@@ -4,15 +4,12 @@ class SnowFlake
 
     def id
       timestamp_ms = current_timestmap_ms
-
       commander.process(
         timestamp_ms: timestamp_ms,
         last_timestamp_ms: last_timestamp_ms
       )
+      update_last_timestamp_ms(timestamp_ms)
       commander.conflate
-    ensure
-      timestamp_ms = fetch_next_time(timestamp_ms) if commander.wait?
-      @last_timestamp_ms = timestamp_ms
     end
 
     def setup(config)
@@ -44,6 +41,11 @@ class SnowFlake
         timestamp_ms = current_timestamp_ms
       end
       timestamp_ms
+    end
+
+    def update_last_timestamp_ms(timestamp_ms)
+      timestamp_ms = fetch_next_time(timestamp_ms) if commander.wait?
+      @last_timestamp_ms = timestamp_ms
     end
   end
 end
