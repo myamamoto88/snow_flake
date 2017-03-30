@@ -17,7 +17,7 @@ describe SnowFlake::Generator do
 
     context 'id generation is success' do
       it 'update @last_timestamp_ms' do
-        before_timestamp_ms = generator.instance_variable_get(:@last_timestamp_ms)
+        before_timestamp_ms = generator.send(:last_timestamp_ms)
         subject
         after_timestamp_ms = generator.instance_variable_get(:@last_timestamp_ms)
 
