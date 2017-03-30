@@ -1,5 +1,7 @@
 # SnowFlake
 
+[![Build Status](https://travis-ci.org/myamamoto88/snow_flake.svg?branch=master)](https://travis-ci.org/myamamoto88/snow_flake)
+
 SnowFlake generates a unique ID
 
 Implemented with reference to [Twitter snowflake](https://github.com/twitter/snowflake/tree/snowflake-2010)
